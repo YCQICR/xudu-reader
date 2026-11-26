@@ -1,0 +1,5 @@
+demo.example.com {
+    reverse_proxy demo:8767 {
+        flush_interval -1
+    }
+}

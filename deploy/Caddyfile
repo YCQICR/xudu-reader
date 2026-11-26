@@ -1,0 +1,9 @@
+{$XUDU_PRIVATE_HOST} {
+    basic_auth {
+        {$XUDU_PROXY_USER} {$XUDU_PROXY_HASH}
+    }
+    reverse_proxy reader:8767 {
+        flush_interval -1
+    }
+}
+import sites/*.caddy

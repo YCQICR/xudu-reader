@@ -1,0 +1,61 @@
+name: xudu
+x-reader: &reader
+  image: xudu-reader:local
+  restart: unless-stopped
+  build:
+    context: ..
+  networks: [frontend]
+  healthcheck:
+    test: ["CMD", "python", "-c", "from urllib.request import urlopen; urlopen('http://127.0.0.1:8767/healthz', timeout=3).close()"]
+    interval: 30s
+    timeout: 5s
+    retries: 3
+  logging:
+    driver: json-file
+    options:
+      max-size: 10m
+      max-file: "3"
+  security_opt: ["no-new-privileges:true"]
+services:
+  reader:
+    <<: *reader
+    env_file: private.env
+    environment:
+      XUDU_SECURE_COOKIES: "1"
+    volumes:
+      - private-data:/var/lib/xudu
+  demo:
+    <<: *reader
+    profiles: [demo]
+    env_file: demo.env
+    environment:
+      XUDU_SECURE_COOKIES: "1"
+      XUDU_DEMO: "1"
+    volumes:
+      - demo-data:/var/lib/xudu
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    ports: ["80:80", "443:443"]
+    environment:
+      XUDU_PRIVATE_HOST: ${XUDU_PRIVATE_HOST:?set the private hostname}
+      XUDU_PROXY_USER: ${XUDU_PROXY_USER:?set the proxy username}
+      XUDU_PROXY_HASH: ${XUDU_PROXY_HASH:?set the Caddy bcrypt hash}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./sites:/etc/caddy/sites:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    networks:
+      frontend:
+        ipv4_address: 172.28.21.2
+networks:
+  frontend:
+    ipam:
+      config:
+        - subnet: 172.28.21.0/24
+volumes:
+  private-data:
+  demo-data:
+  caddy-data:
+  caddy-config:
