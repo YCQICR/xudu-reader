@@ -1,11 +1,11 @@
-# 《傲慢与偏见》演示
+# 跟着《傲慢与偏见》试读
 
-展示同一件事如何随阅读推进变得更清楚。威克姆向伊丽莎白讲了自己和达西的过节。读到达西的来信后，读者可以回头问同一个问题，再从原文核对两人的说法。以下位置基于仓库内的[英文 PDF](../samples/pride-and-prejudice.pdf)。
+威克姆向伊丽莎白讲了自己和达西的过节。读到达西的来信后，读者可以回头问同一个问题，再从原文核对两人的说法。以下位置基于仓库内的[英文 PDF](../samples/pride-and-prejudice.pdf)。
 
-在构建前端并配置 `RELAYCORE_API_KEY` 后，从项目根目录运行下面的命令。演示的模型请求统一走 RelayCore，默认使用 `deepseek-v4.1-flash-1017`。可用 `RELAYCORE_MODEL` 选择密钥所属分组支持的模型。展示书架使用独立数据目录，首次打开书签面板会定位到 PDF 第 168 页。
+在构建前端并配置 `RELAYCORE_API_KEY` 后，从项目根目录运行下面的命令。问答请求通过 RelayCore，默认使用 `deepseek-v4.1-flash-1017`。可用 `RELAYCORE_MODEL` 选择密钥所属分组支持的模型。试读书架使用独立数据目录，首次打开书签面板会定位到 PDF 第 168 页。
 
 ```sh
-XUDU_DEMO=1 XUDU_DATA="$PWD/data/portfolio-showcase" \
+XUDU_DEMO=1 XUDU_DATA="$PWD/data/sample-library" \
   .venv/bin/python -m uvicorn backend.app:app --host 127.0.0.1 --port 8771
 ```
 
@@ -17,4 +17,4 @@ XUDU_DEMO=1 XUDU_DATA="$PWD/data/portfolio-showcase" \
 | 推进至第 169 页以 “You will hardly blame me” 开头的句子，再问同一句。 | 能说明按达西的来信，威克姆主动放弃圣职、改要补偿。可从引文核对归因和金额，从卡片看新线索。 |
 | 退回第 168 页的原句。 | 之后生成的答复和卡片线索随书签一起收起。 |
 
-面试中可进一步展示第 36 章已经读完后的追问「她为什么改变了对威克姆的看法？」。重点看回答如何承接上下文，区分威克姆最初的说法、达西来信和伊丽莎白自己的反应。
+读完第 36 章后，把书签移到章末，接着问「伊丽莎白为什么改变了对威克姆的看法？」。点开引文，对照威克姆最初的说法、达西的来信和伊丽莎白读信后的反应。
