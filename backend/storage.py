@@ -6,8 +6,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = Path(os.environ.get("XUDU_DATA", ROOT / "data" / "reader-v1"))
-SAMPLE = ROOT / "samples" / "西游记.pdf"
-SHOWCASE = ROOT / "samples" / "傲慢与偏见（英文版）.pdf"
+SAMPLE = ROOT / "samples" / "journey-to-the-west.pdf"
+SHOWCASE = ROOT / "samples" / "pride-and-prejudice.pdf"
 
 
 @contextmanager
